@@ -71,9 +71,9 @@ if __name__ == '__main__':
     answers.append(y_prev)
     print(time_steps[-1])
     for _ in time_steps[: -2]:
-        #y_next = np.copy(lax_wendroff(y_next, y_prev, points, CFL))
-        y_next = np.copy(corner_func(y_next, y_prev, points, CFL))
+        y_next = np.copy(lax_wendroff(y_next, y_prev, points, CFL))
+        #y_next = np.copy(corner_func(y_next, y_prev, points, CFL))
         answers.append(np.copy(y_next))
         y_prev = np.copy(y_next)
-    draw(time_steps, answers, points, "./images/corner_func11_shapochka/", "Лабораторная работа 1. Левый уголок", f'Co = {CFL}')
-    #draw(time_steps, answers, points, "./images/lax_wendroff06_shapochka/", "Лабораторная работа 1. Лакс-Вендрофф", f'Co = {CFL}')
+    #draw(time_steps, answers, points, "./images/corner_func06_shapochka/", "Лабораторная работа 1. Левый уголок", f'Co = {CFL}')
+    draw(time_steps, answers, points, "./images/lax_wendroff11_shapochka/", "Лабораторная работа 1. Лакс-Вендрофф", f'Co = {CFL}')
