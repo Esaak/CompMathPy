@@ -49,7 +49,7 @@ if __name__ == '__main__':
     L = 20.0
     answers = []
     points = np.arange(0, L + h, h)
-    CFL = 0.6
+    CFL = 1.1
     tau = CFL * h
     time_steps = np.arange(0, T + tau, tau)
     #y_prev = np.sin(4 * np.pi * points / L) #sin(4pi*x/L)
@@ -71,9 +71,9 @@ if __name__ == '__main__':
     answers.append(y_prev)
     print(time_steps[-1])
     for _ in time_steps[: -2]:
-        y_next = np.copy(lax_wendroff(y_next, y_prev, points, CFL))
-        #y_next = np.copy(corner_func(y_next, y_prev, points, CFL))
+        #y_next = np.copy(lax_wendroff(y_next, y_prev, points, CFL))
+        y_next = np.copy(corner_func(y_next, y_prev, points, CFL))
         answers.append(np.copy(y_next))
         y_prev = np.copy(y_next)
-    draw(time_steps, answers, points, "./images/corner_func06_shapochka/", "Лабораторная работа 1. Левый уголок", f'Co = {CFL}')
+    draw(time_steps, answers, points, "./images/corner_func11_shapochka/", "Лабораторная работа 1. Левый уголок", f'Co = {CFL}')
     #draw(time_steps, answers, points, "./images/lax_wendroff06_shapochka/", "Лабораторная работа 1. Лакс-Вендрофф", f'Co = {CFL}')
