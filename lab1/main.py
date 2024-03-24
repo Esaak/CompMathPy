@@ -49,19 +49,24 @@ if __name__ == '__main__':
     L = 20.0
     answers = []
     points = np.arange(0, L + h, h)
-    CFL = 1.1
+    CFL = 0.6
     tau = CFL * h
     time_steps = np.arange(0, T + tau, tau)
     #y_prev = np.sin(4 * np.pi * points / L) #sin(4pi*x/L)
     init = 0
-    zero = L/6.
+    zero = 10.
     y_prev = []
+    # for point in points:
+    #     if point < zero  + L/6.:
+    #         y_prev.append(np.exp(-(L/6.)**2/(1e-12 + (L/6.)**2 - (point - zero)**2)))
+    #     else:
+    #         zero += L/3.
+    #         y_prev.append(np.exp(-(L/6.)**2/(1e-12 + (L/6.)**2 - (point - zero)**2)))
     for point in points:
-        if point < zero  + L/6.:
-            y_prev.append(np.exp(-(L/6.)**2/(1e-12 + (L/6.)**2 - (point - zero)**2)))
+        if point < 8. or point > 12.:
+            y_prev.append(0.)
         else:
-            zero += L/3.
-            y_prev.append(np.exp(-(L/6.)**2/(1e-12 + (L/6.)**2 - (point - zero)**2)))
+            y_prev.append(np.exp(-(2) ** 2 / (1e-12 + 2 ** 2 - (point - zero) ** 2)))
     y_next = np.ones(len(points))
     answers.append(y_prev)
     print(time_steps[-1])
@@ -70,5 +75,5 @@ if __name__ == '__main__':
         #y_next = np.copy(corner_func(y_next, y_prev, points, CFL))
         answers.append(np.copy(y_next))
         y_prev = np.copy(y_next)
-    #draw(time_steps, answers, points, "./images/corner_func11_shapochka/", "Лабораторная работа 1. Левый уголок", f'Co = {CFL}')
-    draw(time_steps, answers, points, "./images/lax_wendroff11_shapochka/", "Лабораторная работа 1. Лакс-Вендрофф", f'Co = {CFL}')
+    draw(time_steps, answers, points, "./images/corner_func06_shapochka/", "Лабораторная работа 1. Левый уголок", f'Co = {CFL}')
+    #draw(time_steps, answers, points, "./images/lax_wendroff06_shapochka/", "Лабораторная работа 1. Лакс-Вендрофф", f'Co = {CFL}')
