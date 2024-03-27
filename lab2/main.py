@@ -28,7 +28,7 @@ def update_matrix(eps, u, c, gamma=5 / 3.):
 
 def draw(time_steps, answers, points, path, title):
     plt.figure(figsize=(10, 10))
-
+    print(np.min(answers))
     for i in range(len(time_steps) - 1):
         if i % 100 == 0:
             plt.clf()
@@ -63,18 +63,29 @@ if __name__ == '__main__':
 
     # left
     vL = 0.
-    roL = 13.
-    pL = 10. * 10 ** 5
+    roL = 20.
+    pL = 20. * 10 ** 5
+    epsL = pL / ((gamma - 1) * roL)
+    cL = np.sqrt(gamma * (gamma - 1) * epsL)
+
+    # mid
+    vM = 0.
+    roM = 13.0
+    pM = 10. * 10 ** 5
+    epsM = pM / ((gamma - 1) * roM)
+    cM = np.sqrt(gamma * (gamma - 1) * epsM)
+
     # right
     vR = 0.
     roR = 1.3
     pR = 1. * 10 ** 5
+    epsR = pR / ((gamma - 1) * roR)
+    cR = np.sqrt(gamma * (gamma - 1) * epsR)
+
+
+
     u = 0.
     eps = 0.
-    epsL = pL / ((gamma - 1) * roL)
-    epsR = pR / ((gamma - 1) * roR)
-    cL = np.sqrt(gamma * (gamma - 1) * epsL)
-    cR = np.sqrt(gamma * (gamma - 1) * epsR)
     time_steps = [0.]
     # НУ
     w_prev = []
@@ -87,7 +98,7 @@ if __name__ == '__main__':
     A_prev = []
     Ld_prev = []
     for i in range(len(points)):
-        if points[i] <= 0:
+        if points[i] <= -5:
             w_prev.append([roL, 0., roL * epsL])
             nu.append([roL, 0, epsL])
             p.append(pL)
@@ -96,7 +107,16 @@ if __name__ == '__main__':
             OmegaT_1_prev.append(np.array(O_1))
             A_prev.append(np.array(A))
             Ld_prev.append(np.array(Ld))
-        else:
+        elif points[i] > -5 and points[i] <= 5:
+            w_prev.append([roM, 0., roM * epsM])
+            nu.append([roM, 0, epsM])
+            p.append(pM)
+            O, O_1, A, Ld = update_matrix(epsM, u, cM)
+            OmegaT_prev.append(np.array(O))
+            OmegaT_1_prev.append(np.array(O_1))
+            A_prev.append(np.array(A))
+            Ld_prev.append(np.array(Ld))
+        elif points[i] > 5:
             w_prev.append([roR, 0., roR * epsR])
             nu.append([roR, 0, epsR])
             p.append(pR)
@@ -151,7 +171,6 @@ if __name__ == '__main__':
 
         nu_results.append(np.copy(nu))
         p_results.append(np.copy(p))
-        #tmp = np.array(nu_results[-1]) - np.array(nu_results[0])
         cur_time += tau
         time_steps.append(cur_time)
     nu_results = np.array(nu_results)
@@ -163,7 +182,7 @@ if __name__ == '__main__':
         Ro.append(nu_results[i][:, 0])
         U.append(nu_results[i][:, 1])
         E.append(nu_results[i][:, 2])
-    draw(time_steps, p_results, points, "./images/p/", "Лабораторная работа 2. P, Па")
-    draw(time_steps, Ro, points, "./images/nu1/", "Лабораторная работа 2. U, m/s")
-    draw(time_steps, U, points, "./images/nu0/", "Лабораторная работа 2. Ro, kg/m^3")
-    draw(time_steps, E, points, "./images/nu2/", "Лабораторная работа 2. e, Dg/kg")
+    draw(time_steps, p_results, points, "./images/p_3/", "Лабораторная работа 2. P, Па")
+    draw(time_steps, Ro, points, "./images/nu1_3/", "Лабораторная работа 2. U, m/s")
+    draw(time_steps, U, points, "./images/nu0_3/", "Лабораторная работа 2. Ro, kg/m^3")
+    draw(time_steps, E, points, "./images/nu2_3/", "Лабораторная работа 2. e, Dg/kg")
