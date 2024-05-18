@@ -13,6 +13,6 @@ $$
 \end{equation*}
 $$
 ## Приближенное аналитическое решение:
-$$u(x, y, t) = cos(\pi x)sin(5\pi y) e^{-50 \pi^2\lambda t}\\$$
+$$u(x, y, t) = cos(\pi x)sin(5\pi y) e^{-50 \pi^2\lambda t}$$
 ## График:
 ![](./lab_3_1.jpg)
