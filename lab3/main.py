@@ -100,7 +100,7 @@ def draw(x, y):
     plt.plot(x, y_approx, "-o", label=f"k = {coef[0]}")
     print(coef[0])
     plt.legend()
-    plt.savefig("lab_3_1.png")
+    plt.savefig("lab_3_1.jpg")
     plt.show()
 
 
